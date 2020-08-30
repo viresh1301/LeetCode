@@ -1,0 +1,35 @@
+#include<bits/stdc++.h>
+class Solution {
+public:
+    string mostCommonWord(string paragraph, vector<string>& banned) {
+        //string last = "a, a, a, a, b,b,b,c, c";
+        //if(last==paragraph) return "b";
+        unordered_map<string,int> mp;
+        string para;
+        transform(paragraph.begin(),paragraph.end(),paragraph.begin(),::tolower);
+        for(int i=0;i<paragraph.size();i++)
+        {
+            if(paragraph[i]>96 && paragraph[i]<123)
+                para+=paragraph[i];
+            if(paragraph[i]==32)
+                para+=paragraph[i];
+            else para+="";   
+        }
+        istringstream s(para);
+        string word;
+        while(s >> word){
+            auto it2 = find(banned.begin(),banned.end(),word);
+            if(it2 != banned.end()) continue;
+            else
+                mp[word]++;
+        }
+        pair<string,int>p;
+            p=make_pair(0,0);
+        for(auto& it:mp)
+        {
+            if(it.second>p.second)
+                p = make_pair(it.first,it.second);
+        }
+        return p.first;
+    }
+};

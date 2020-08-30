@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int scoreOfParentheses(string S) {
+        int count=0,ans=0;
+        char prev;
+        for(int i=0;i<S.size();i++)
+        {
+            if(S[i]=='(')
+            {
+                count++;
+                prev = '(';
+            }
+            else
+            {
+                count--;
+                if(prev =='(')
+                    ans+=1<<count;
+                prev =')';
+            }
+        }
+        return ans;
+    }
+};

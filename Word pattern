@@ -1,0 +1,50 @@
+#include<bits/stdc++.h>
+
+class Solution {
+public:
+    bool wordPattern(string pattern, string str) {
+        unordered_map<char,string>mp;
+        int j=0,count=0;
+        string s="";
+        string v="";
+        for(int i=0;i<str.size();i++)
+        {
+            if(j>=pattern.size()) break;
+            if(str[i]==' ' || i==str.size()-1)
+            {
+                if(i == str.size() - 1){
+                    s += str[i];
+                }
+                count++;
+                if(mp.find(pattern[j]) == mp.end())
+                {
+                    mp.insert({pattern[j],s});
+                    //mp[pattern[j]]=s; 
+                    j++;
+                }
+                else
+                {
+                    j++; 
+                    //continue;
+                }
+                s="";
+            }
+            else s+=str[i];
+        }
+        if(pattern.size()==1 && pattern.size()==count) return true;
+        for(auto& it: mp)
+        {
+            for(auto& it2:mp)
+            {
+                if(it.second==it2.second && it.first!=it2.first) return false;
+            }
+        }
+        for(int i=0;i<pattern.size();i++)
+        {
+            v += mp[pattern[i]];
+            if(i!=pattern.size()-1) v+=" ";
+        }
+        if(v==str) return true;
+        else return false;
+    }
+};
